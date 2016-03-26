@@ -27,9 +27,11 @@
             android:name=".ShowEvent"
             android:label="@string/title_activity_show_event" >
         </activity>
-        <activity android:name=".CreateEvent" >
+        <activity android:name=".CreateEvent"
+            android:label="@string/title_activity_create_event" >
         </activity>
-        <activity android:name=".JoinEvent" >
+        <activity android:name=".JoinEvent"
+            android:label="@string/title_activity_join_event" >
         </activity>
     </application>
 

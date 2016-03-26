@@ -2,4 +2,6 @@
     <string name="app_name">Waffle</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_show_event">Events</string>
+    <string name="title_activity_create_event">Create Event</string>
+    <string name="title_activity_join_event">Join Event</string>
 </resources>

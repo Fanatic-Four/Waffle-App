@@ -36,7 +36,7 @@ android:paddingTop="@dimen/activity_vertical_margin" tools:context=".CreateEvent
 
         <Button android:id="@+id/create_event_button" style="?android:textAppearanceSmall"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" android:text="Create Event"
+            android:layout_marginTop="16dp" android:text="Create"
             android:textStyle="bold" />
 
     </LinearLayout>
