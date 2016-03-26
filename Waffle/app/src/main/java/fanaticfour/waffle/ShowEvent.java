@@ -92,7 +92,12 @@ public class ShowEvent extends Activity {
             }
         });
 
-//        populateEventsList();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        populateEventsList();
     }
 
     private void populateEventsList() {
@@ -102,7 +107,7 @@ public class ShowEvent extends Activity {
 
             URL url = null;
             try {
-                url = new URL("http://waffle-server.herokuapp.com/signup");
+                url = new URL("http://waffle-server.herokuapp.com/android-events");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -112,8 +117,7 @@ public class ShowEvent extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            conn.setRequestMethod("POST");
-            conn.setUseCaches(false);
+            conn.setRequestMethod("GET");
 
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : "
