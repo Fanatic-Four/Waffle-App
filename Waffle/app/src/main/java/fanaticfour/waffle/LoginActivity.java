@@ -158,6 +158,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+            String response = "";
             String uname = ((AutoCompleteTextView)findViewById((R.id.username))).getText().toString();
             String passw = ((EditText)findViewById(R.id.password)).getText().toString();
 
@@ -201,6 +202,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 System.out.println("Output from Server .... \n");
                 while ((output = br.readLine()) != null) {
                     System.out.println(output);
+                    response += output;
                 }
 
                 conn.disconnect();
@@ -213,8 +215,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
                 e.printStackTrace();
             }
-            Intent intent = new Intent(this, ShowEvent.class);
-            startActivity(intent);
+            if(response.contains("Success")){
+                Intent intent = new Intent(this, ShowEvent.class);
+                startActivity(intent);
+            }
         }
     }
 
