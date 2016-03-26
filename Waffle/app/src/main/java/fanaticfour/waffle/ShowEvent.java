@@ -53,39 +53,33 @@ public class ShowEvent extends Activity {
             }
         });
 
-//        ArrayList<Event> eventList = null;
-//        try{
-//            Bundle evtBundle = getIntent().getExtras();
-//            eventList = (ArrayList<Event>) evtBundle.getSerializable("eventList");
-//        }
-//        catch (Exception e){
-//        }
-//        String[] allEvents = new String[eventList.size()];
-//        for(int i = 0; i < eventList.size(); i++){
-//            allEvents[i] = eventList.get(i).toString();
-//        }
+        ArrayList<Event> eventList = null;
+        try{
+            Bundle evtBundle = getIntent().getExtras();
+            eventList = (ArrayList<Event>) evtBundle.getSerializable("eventList");
+        }
+        catch (Exception e){
+        }
+        System.out.println("Event list " + eventList);
+//        System.out.println("Size " + eventList.size());
 
-//        LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View v = vi.inflate(R.layout.your_layout, null);
-//
-//        // fill in any details dynamically here
-//        TextView textView = (TextView) v.findViewById(R.id.a_text_view);
-//        textView.setText("your text");
-//
-//        // insert into main view
-//        ViewGroup insertPoint = (ViewGroup) findViewById(R.id.insert_point);
-//        insertPoint.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+        String[] allEvents = new String[eventList.size()];
+        for(int i = 0; i < eventList.size(); i++){
+            allEvents[i] = eventList.get(i).toString();
+            System.out.println("all event at i " + allEvents[i]);
+        }
+//        System.out.println(allEvents);
 
         // Listview Data
         String events[] = {"Hawkathon", "HackUmass", "HackHolyoke"};
 
         lv = (ListView) findViewById(R.id.list_view);
         inputSearch = (EditText) findViewById(R.id.inputSearch);
-
+        System.out.println("lv: " + lv);
         // Adding items to listview
-        adapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.event_name, events);
+        adapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.event_name, allEvents);
         lv.setAdapter(adapter);
-
+        System.out.println("lv: " + lv + " adapter:" + adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 

@@ -421,7 +421,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             while ((output = br.readLine()) != null) {
                 String[] info = output.split(",");
                 System.out.println(output);
-                if(info.length < 2) continue;
+                if(info == null || info.length < 2) continue;
                 Event evt = new Event(info[0], info[1]);
                 for(int i = 0; i < info.length-1; i++){
                     evt.addAttendee(info[i]);
@@ -430,6 +430,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 eventList.add(evt);
             }
             conn.disconnect();
+            System.out.println(eventList);
             return eventList;
 
         } catch (MalformedURLException e) {
@@ -440,6 +441,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
             e.printStackTrace();
         }
+        System.out.println("reached null");
         return null;
 
     }

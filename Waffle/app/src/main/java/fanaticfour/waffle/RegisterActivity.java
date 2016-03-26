@@ -21,6 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class RegisterActivity extends Activity {
 
@@ -117,6 +118,9 @@ public class RegisterActivity extends Activity {
         }
 
         Intent intent = new Intent(this, ShowEvent.class);
+        Bundle evtBundle = new Bundle();
+        evtBundle.putSerializable("eventList", getEventsList());
+        intent.putExtras(evtBundle);
         startActivity(intent);
     }
 
@@ -154,6 +158,66 @@ public class RegisterActivity extends Activity {
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
+    }
+
+    private ArrayList<Event> getEventsList() {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            URL url = null;
+            try {
+                url = new URL("http://waffle-server.herokuapp.com/android-events");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            HttpURLConnection conn = null;
+            try {
+                conn = (HttpURLConnection) url.openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            conn.setRequestMethod("GET");
+            conn.setUseCaches(false);
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (conn.getInputStream())));
+
+            String output;
+            System.out.println("Output from Server .... \n");
+            ArrayList<Event> eventList = new ArrayList<Event>();
+
+            while ((output = br.readLine()) != null) {
+                String[] info = output.split(",");
+                System.out.println(output);
+                if(info == null || info.length < 2) continue;
+                Event evt = new Event(info[0], info[1]);
+                for(int i = 0; i < info.length-1; i++){
+                    evt.addAttendee(info[i]);
+                }
+                evt.eventName = info[info.length-1];
+                eventList.add(evt);
+            }
+            conn.disconnect();
+            System.out.println(eventList);
+            return eventList;
+
+        } catch (MalformedURLException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        System.out.println("reached null");
+        return null;
+
     }
 
 

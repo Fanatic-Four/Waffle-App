@@ -31,7 +31,7 @@ public class JoinEvent extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_join_event);
 
         Button mJoinButton = (Button) findViewById(R.id.join_button);
         mJoinButton.setOnClickListener(new View.OnClickListener() {

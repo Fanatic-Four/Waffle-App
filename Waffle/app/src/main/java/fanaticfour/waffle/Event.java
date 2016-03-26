@@ -26,13 +26,12 @@ public class Event implements Serializable{
     }
 
     public String toString(){
-        String result = "Event Name: " + eventName + "\nCreator: " + creator_username;
-        for(String a : attendees){
-            result = result + "\n" + a;
+        String result = "Event Name: " + eventName + "\nEvent creator: " + creator_username;
+
+        if(description != null && description.length() != 0){
+            result = result + "\n" + description+"\n";
         }
-        if(description.length() != 0){
-            result = result + "\n" + description;
-        }
+
         return result;
     }
 }
