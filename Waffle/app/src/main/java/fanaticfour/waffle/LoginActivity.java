@@ -98,7 +98,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 
     private void register(View v){
-        Intent intent = new Intent(this, register.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
@@ -151,6 +151,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(true);
             mAuthTask = new UserLoginTask(name, password);
             mAuthTask.execute((Void) null);
+            Intent intent = new Intent(this, ShowEvent.class);
+            startActivity(intent);
         }
     }
 
