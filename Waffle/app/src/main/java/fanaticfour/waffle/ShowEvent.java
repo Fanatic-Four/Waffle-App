@@ -92,7 +92,7 @@ public class ShowEvent extends Activity {
             }
         });
 
-        populateEventsList();
+//        populateEventsList();
     }
 
     private void populateEventsList() {
