@@ -167,7 +167,7 @@ public class RegisterActivity extends Activity {
 
             URL url = null;
             try {
-                url = new URL("http://waffle-server.herokuapp.com/android-events");
+                url = new URL("http://waffle-server.herokuapp.com/android-events?username=" + mUsernameView.getText().toString());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
