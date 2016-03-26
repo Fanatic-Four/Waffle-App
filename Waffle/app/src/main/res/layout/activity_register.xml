@@ -17,6 +17,19 @@
         <LinearLayout android:id="@+id/username_register_form" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:orientation="vertical">
 
+            <EditText android:id="@+id/firstname" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="@string/first_name"
+                android:imeActionLabel="First Name"
+                android:imeOptions="actionUnspecified" android:inputType="textPersonName"
+                android:maxLines="1" android:singleLine="true" />
+
+            <EditText android:id="@+id/lastname" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="@string/last_name"
+                android:imeActionId="@+id/username_register_form"
+                android:imeActionLabel="Last Name"
+                android:imeOptions="actionUnspecified" android:inputType="textPersonName"
+                android:maxLines="1" android:singleLine="true" />
+
             <AutoCompleteTextView android:id="@+id/username" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:hint="@string/rprompt_username"
                 android:inputType="text" android:maxLines="1"

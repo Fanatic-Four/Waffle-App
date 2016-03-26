@@ -7,9 +7,6 @@
     <string name="raction_sign_up_short">Register</string>
     <string name="rprompt_phonenum">Phone number</string>
     <string name="raction_register">Register</string>
-
-    <!--<string name="error_invalid_username">This username is too short</string>-->
-    <!--<string name="error_invalid_password">This password is too short</string>-->
-    <!--<string name="error_incorrect_password">This password is incorrect</string>-->
-    <!--<string name="error_field_required">This field is required</string>-->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 </resources>

@@ -7,13 +7,20 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.KeyEvent;
+import android.os.StrictMode;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class RegisterActivity extends Activity {
 
@@ -31,7 +38,6 @@ public class RegisterActivity extends Activity {
 
         // Set up the register form.
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
-        //populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
 
@@ -49,8 +55,61 @@ public class RegisterActivity extends Activity {
         mProgressView = findViewById(R.id.register_progress);
     }
 
-    private void register(View v){
+    private void register(View v) {
         showProgress(true);
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            String urlParameters = "name=fanaticfour&pass=123&fName=Calvin&lName=Mei&phone=7322771111";
+            byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+            URL url = null;
+            try {
+                url = new URL("http://waffle-server.herokuapp.com/signup");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            HttpURLConnection conn = null;
+            try {
+                conn = (HttpURLConnection) url.openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("charset", "utf-8");
+            conn.setRequestProperty("Content-Length", Integer.toString(postData.length));
+            conn.setUseCaches(false);
+            try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
+                wr.write(postData);
+            }
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (conn.getInputStream())));
+
+            String output;
+            System.out.println("Output from Server .... \n");
+            while ((output = br.readLine()) != null) {
+                System.out.println(output);
+            }
+
+            conn.disconnect();
+
+        } catch (MalformedURLException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
         Intent intent = new Intent(this, ShowEvent.class);
         startActivity(intent);
     }
