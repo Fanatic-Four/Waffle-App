@@ -32,10 +32,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * A login screen that offers login via email/password.
@@ -170,7 +173,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
                 URL url = null;
                 try {
-                    url = new URL("http://waffle-server.herokuapp.com/login");
+                    url = new URL("https://waffle-server.herokuapp.com/login");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -217,7 +220,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
             if(response.contains("Success")){
                 Intent intent = new Intent(this, ShowEvent.class);
+                Bundle evtBundle = new Bundle();
+                evtBundle.putSerializable("eventList", getEventsList());
+                intent.putExtras(evtBundle);
                 startActivity(intent);
+
             }
         }
     }
@@ -377,6 +384,64 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    private ArrayList<Event> getEventsList() {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            URL url = null;
+            try {
+                url = new URL("http://waffle-server.herokuapp.com/android-events");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            HttpURLConnection conn = null;
+            try {
+                conn = (HttpURLConnection) url.openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            conn.setRequestMethod("GET");
+            conn.setUseCaches(false);
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (conn.getInputStream())));
+
+            String output;
+            System.out.println("Output from Server .... \n");
+            ArrayList<Event> eventList = new ArrayList<Event>();
+
+            while ((output = br.readLine()) != null) {
+                String[] info = output.split(",");
+                System.out.println(output);
+                if(info.length < 2) continue;
+                Event evt = new Event(info[0], info[1]);
+                for(int i = 0; i < info.length-1; i++){
+                    evt.addAttendee(info[i]);
+                }
+                evt.eventName = info[info.length-1];
+                eventList.add(evt);
+            }
+            conn.disconnect();
+            return eventList;
+
+        } catch (MalformedURLException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        return null;
+
     }
 }
 

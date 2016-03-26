@@ -1,23 +1,28 @@
 package fanaticfour.waffle;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +52,29 @@ public class ShowEvent extends Activity {
                 createEvent(view);
             }
         });
+
+//        ArrayList<Event> eventList = null;
+//        try{
+//            Bundle evtBundle = getIntent().getExtras();
+//            eventList = (ArrayList<Event>) evtBundle.getSerializable("eventList");
+//        }
+//        catch (Exception e){
+//        }
+//        String[] allEvents = new String[eventList.size()];
+//        for(int i = 0; i < eventList.size(); i++){
+//            allEvents[i] = eventList.get(i).toString();
+//        }
+
+//        LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View v = vi.inflate(R.layout.your_layout, null);
+//
+//        // fill in any details dynamically here
+//        TextView textView = (TextView) v.findViewById(R.id.a_text_view);
+//        textView.setText("your text");
+//
+//        // insert into main view
+//        ViewGroup insertPoint = (ViewGroup) findViewById(R.id.insert_point);
+//        insertPoint.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
 
         // Listview Data
         String events[] = {"Hawkathon", "HackUmass", "HackHolyoke"};
@@ -91,58 +119,6 @@ public class ShowEvent extends Activity {
                 // TODO Auto-generated method stub
             }
         });
-
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        populateEventsList();
-    }
-
-    private void populateEventsList() {
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-
-            URL url = null;
-            try {
-                url = new URL("http://waffle-server.herokuapp.com/android-events");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            HttpURLConnection conn = null;
-            try {
-                conn = (HttpURLConnection) url.openConnection();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            conn.setRequestMethod("GET");
-
-            if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
-
-            String output;
-            System.out.println("Output from Server .... \n");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-
-            conn.disconnect();
-
-        } catch (MalformedURLException e) {
-
-            e.printStackTrace();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
 
     }
 

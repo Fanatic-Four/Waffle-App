@@ -71,7 +71,7 @@ public class RegisterActivity extends Activity {
             byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
             URL url = null;
             try {
-                url = new URL("http://waffle-server.herokuapp.com/signup");
+                url = new URL("https://waffle-server.herokuapp.com/signup");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
