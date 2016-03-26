@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Waffle</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_show_event">Events</string>
+    <string name="event_list">
+        Hawkathon @ Umass Lowell\n"
+    </string>
+</resources>
