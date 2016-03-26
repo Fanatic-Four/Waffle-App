@@ -60,10 +60,10 @@ public class ShowEvent extends Activity {
 
         // Listview Data
         for(Event e : hosting_events){
-            adapter.addHostEvent(e.toString());
+            adapter.addHostEvent(e);
         }
         for(Event e : attending_events){
-            adapter.addAttendEvent(e.toString());
+            adapter.addAttendEvent(e);
         }
         //Add other events later
 

@@ -24,7 +24,7 @@ public class CustomAdapter extends BaseAdapter{
 
     private Context context;
 
-    private ArrayList mData = new ArrayList();
+    private ArrayList<String> mData = new ArrayList<String>();
     private LayoutInflater mInflater;
 
     private TreeSet mSeparatorsSet = new TreeSet();
@@ -34,13 +34,13 @@ public class CustomAdapter extends BaseAdapter{
         context = ctxt;
     }
 
-    public void addAttendEvent(final String item) {
-        mData.add(item);
+    public void addAttendEvent(Event e) {
+        mData.add(e.toString());
         notifyDataSetChanged();
     }
 
-    public void addHostEvent(final String item) {
-        mData.add(item);
+    public void addHostEvent(Event e) {
+        mData.add(e.toString());
         // save separator position
         mSeparatorsSet.add(mData.size() - 1);
         notifyDataSetChanged();
@@ -78,6 +78,7 @@ public class CustomAdapter extends BaseAdapter{
         System.out.println("getView " + position + " " + convertView + " type = " + type);
         if (convertView == null) {
             holder = new ViewHolder();
+            System.out.println("IN HERHEHEHREHRHEHR");
             switch (type) {
                 case TYPE_ATTENDING:
                     convertView = mInflater.inflate(R.layout.list_item, null);
@@ -87,8 +88,6 @@ public class CustomAdapter extends BaseAdapter{
 
                         @Override
                         public void onClick(View v) {
-                            //If you wanna send any data to nextActicity.class you can use
-                            //i.putExtra(String key, value.get(position));
                             context.startActivity(new Intent(context, JoinEvent.class));
                         }
                     });
@@ -96,12 +95,11 @@ public class CustomAdapter extends BaseAdapter{
                 case TYPE_HOST:
                     convertView = mInflater.inflate(R.layout.host_event_item, null);
                     convertView.setBackgroundColor(Color.parseColor("#FF0000"));
-                    holder.textView = (TextView)convertView.findViewById(R.id.hosting_events);
+                    holder.textView = (TextView)convertView.findViewById(R.id.host_event);
                     convertView.findViewById(R.id.attending_events).setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View v) {
-                            //If you wanna send any data to nextActicity.class you can use
                             //i.putExtra(String key, value.get(position));
                             context.startActivity(new Intent(context, HostingEvent.class));
                         }
@@ -109,7 +107,7 @@ public class CustomAdapter extends BaseAdapter{
                     break;
                 case TYPE_OTHER: // create an "other" view
                     convertView = mInflater.inflate(R.layout.host_event_item, null);
-                    holder.textView = (TextView)convertView.findViewById(R.id.hosting_events);
+                    holder.textView = (TextView)convertView.findViewById(R.id.host_event);
                     break;
             }
             convertView.setTag(holder);
