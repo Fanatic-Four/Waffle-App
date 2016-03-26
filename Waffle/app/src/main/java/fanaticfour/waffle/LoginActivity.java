@@ -371,6 +371,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mAuthTask = null;
             showProgress(false);
 
+            System.out.println(success);
             if (success) {
                 finish();
             } else {
@@ -393,7 +394,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
             URL url = null;
             try {
-                url = new URL("http://waffle-server.herokuapp.com/android-events");
+                url = new URL("http://waffle-server.herokuapp.com/android-events?username=" + mUsernameView.getText().toString());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
