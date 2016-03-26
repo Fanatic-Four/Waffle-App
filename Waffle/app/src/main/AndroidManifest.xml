@@ -25,6 +25,10 @@
             android:name=".ShowEvent"
             android:label="@string/title_activity_show_event" >
         </activity>
+        <activity android:name=".CreateEvent" >
+        </activity>
+        <activity android:name=".JoinEvent" >
+        </activity>
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@
         android:id="@+id/inputSearch"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Search products.."
+        android:hint="Search events.."
         android:inputType="textVisiblePassword" />
 
     <!-- List View -->
@@ -16,5 +16,10 @@
         android:id="@+id/list_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
+
+    <Button android:id="@+id/create_event_button" style="?android:textAppearanceSmall"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" android:text="Create Event"
+        android:textStyle="bold" />
 
 </LinearLayout>

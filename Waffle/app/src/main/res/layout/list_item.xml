@@ -5,8 +5,8 @@
 
     <!-- Single ListItem -->
 
-    <!-- Product Name -->
-    <TextView android:id="@+id/product_name"
+    <!-- Event Name -->
+    <TextView android:id="@+id/event_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="10dip"
