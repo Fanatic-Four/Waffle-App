@@ -21,6 +21,10 @@
             android:name=".register"
             android:label="@string/title_activity_register" >
         </activity>
+        <activity
+            android:name=".ShowEvent"
+            android:label="@string/title_activity_show_event" >
+        </activity>
     </application>
 
 </manifest>
