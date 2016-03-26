@@ -3,10 +3,10 @@ package fanaticfour.waffle;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.app.Activity;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -57,11 +57,17 @@ public class RegisterActivity extends Activity {
 
     private void register(View v) {
         showProgress(true);
+        String fname = ((EditText)findViewById(R.id.firstname)).getText().toString();
+        String lname = ((EditText)findViewById(R.id.lastname)).getText().toString();
+        String uname = ((AutoCompleteTextView)findViewById((R.id.username))).getText().toString();
+        String passw = ((EditText)findViewById(R.id.password)).getText().toString();
+        String phone = ((EditText)findViewById(R.id.phonenum)).getText().toString();
+
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            String urlParameters = "name=fanaticfour&pass=123&fName=Calvin&lName=Mei&phone=7322771111";
+            String urlParameters = "name="+uname+"&pass="+passw+"&fName="+fname+"&lName="+lname+"&phone="+phone;
             byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
             URL url = null;
             try {
