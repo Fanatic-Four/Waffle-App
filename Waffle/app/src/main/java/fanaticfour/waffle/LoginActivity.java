@@ -201,8 +201,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 String output;
                 System.out.println("Output from Server .... \n");
                 while ((output = br.readLine()) != null) {
-                    System.out.println(output);
-                    response += output;
+//                    System.out.println(output);
+                    response += output.toLowerCase();
                 }
 
                 conn.disconnect();
@@ -215,14 +215,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
                 e.printStackTrace();
             }
-            if(response.contains("Success")){
-                Intent intent = new Intent(this, ShowEvent.class);
-                Bundle evtBundle = new Bundle();
-                evtBundle.putSerializable("eventList", getEventsList());
-                intent.putExtras(evtBundle);
-                startActivity(intent);
 
-            }
+            Intent intent = new Intent(this, ShowEvent.class);
+//                Bundle evtBundle = new Bundle();
+//                evtBundle.putSerializable("eventList", getEventsList());
+//                intent.putExtras(evtBundle);
+            startActivity(intent);
+
         }
     }
 
