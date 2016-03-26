@@ -180,6 +180,7 @@ public class RegisterActivity extends Activity {
             conn.setRequestMethod("GET");
             conn.setUseCaches(false);
 
+
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : "
                         + conn.getResponseCode());
@@ -194,13 +195,15 @@ public class RegisterActivity extends Activity {
 
             while ((output = br.readLine()) != null) {
                 String[] info = output.split(",");
+
                 System.out.println(output);
-                if(info == null || info.length < 2) continue;
-                Event evt = new Event(info[0], info[1]);
-                for(int i = 0; i < info.length-1; i++){
+
+                if(info == null || info.length < 4) continue;
+                Event evt = new Event(info[0], info[1], info[2], info[3]);
+                for(int i = 0; i < info.length; i++){
                     evt.addAttendee(info[i]);
                 }
-                evt.eventName = info[info.length-1];
+
                 eventList.add(evt);
             }
             conn.disconnect();

@@ -1,8 +1,5 @@
 package fanaticfour.waffle;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,10 +11,13 @@ public class Event implements Serializable{
     String eventName;
     ArrayList<String> attendees;
     String description;
+    String type;
 
-    public Event(String cname, String ename){
+    public Event(String typ, String cname, String ename, String desc){
+        type = typ;
         creator_username = cname;
         eventName= ename;
+        description = desc;
         attendees = new ArrayList<String>();
     }
 

@@ -32,13 +32,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * A login screen that offers login via email/password.
@@ -406,6 +403,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             conn.setRequestMethod("GET");
             conn.setUseCaches(false);
 
+
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : "
                         + conn.getResponseCode());
@@ -420,13 +418,15 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
             while ((output = br.readLine()) != null) {
                 String[] info = output.split(",");
+
                 System.out.println(output);
-                if(info == null || info.length < 2) continue;
-                Event evt = new Event(info[0], info[1]);
-                for(int i = 0; i < info.length-1; i++){
+
+                if(info == null || info.length < 4) continue;
+                Event evt = new Event(info[0], info[1], info[2], info[3]);
+                for(int i = 0; i < info.length; i++){
                     evt.addAttendee(info[i]);
                 }
-                evt.eventName = info[info.length-1];
+
                 eventList.add(evt);
             }
             conn.disconnect();

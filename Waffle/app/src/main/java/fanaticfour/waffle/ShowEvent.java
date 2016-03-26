@@ -1,29 +1,15 @@
 package fanaticfour.waffle;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,7 +19,7 @@ public class ShowEvent extends Activity {
     private ListView lv;
 
     // Listview Adapter
-    ArrayAdapter<String> adapter;
+    CustomAdapter adapter;
 
     // Search EditText
     EditText inputSearch;
@@ -60,36 +46,40 @@ public class ShowEvent extends Activity {
         }
         catch (Exception e){
         }
-        System.out.println("Event list " + eventList);
-//        System.out.println("Size " + eventList.size());
 
-        String[] allEvents = new String[eventList.size()];
-        for(int i = 0; i < eventList.size(); i++){
-            allEvents[i] = eventList.get(i).toString();
-            System.out.println("all event at i " + allEvents[i]);
-        }
-//        System.out.println(allEvents);
-
-        // Listview Data
-        String events[] = {"Hawkathon", "HackUmass", "HackHolyoke"};
+        ArrayList<Event> hosting_events = getEventsOfType(eventList, "HOST");
+        ArrayList<Event> attending_events = getEventsOfType(eventList, "ATTENDING");
+        ArrayList<Event> other_events = getEventsOfType(eventList, "OTHER");
 
         lv = (ListView) findViewById(R.id.list_view);
         inputSearch = (EditText) findViewById(R.id.inputSearch);
-        System.out.println("lv: " + lv);
+
         // Adding items to listview
-        adapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.event_name, allEvents);
+//        adapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.attending_events, allEvents);
+        adapter = new CustomAdapter(this);
+
+        // Listview Data
+        for(Event e : hosting_events){
+            adapter.addHostEvent(e.toString());
+        }
+        for(Event e : attending_events){
+            adapter.addAttendEvent(e.toString());
+        }
+        //Add other events later
+
         lv.setAdapter(adapter);
-        System.out.println("lv: " + lv + " adapter:" + adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 
-                Intent i = new Intent(ShowEvent.this, JoinEvent.class);
-                //If you wanna send any data to nextActicity.class you can use
-                //i.putExtra(String key, value.get(position));
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+//
+//                Intent i = new Intent(ShowEvent.this, JoinEvent.class);
+//                //If you wanna send any data to nextActicity.class you can use
+//                //i.putExtra(String key, value.get(position));
+//
+//                startActivity(i);
+//            }
+//        });
 
-                startActivity(i);
-            }
-        });
 
         /**
          * Enabling Search Filter
@@ -98,7 +88,7 @@ public class ShowEvent extends Activity {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
-                ShowEvent.this.adapter.getFilter().filter(cs);
+//                ShowEvent.this.adapter.getFilter().filter(cs);
             }
 
             @Override
@@ -114,6 +104,16 @@ public class ShowEvent extends Activity {
             }
         });
 
+    }
+
+    private ArrayList<Event> getEventsOfType(ArrayList<Event> eventList, String type) {
+        ArrayList<Event> result = new ArrayList<Event>();
+        for(Event e : eventList){
+            if(e.type.equals(type)){
+                result.add(e);
+            }
+        }
+        return result;
     }
 
     private void createEvent(View view) {

@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,11 +26,17 @@
             android:name=".ShowEvent"
             android:label="@string/title_activity_show_event" >
         </activity>
-        <activity android:name=".CreateEvent"
+        <activity
+            android:name=".CreateEvent"
             android:label="@string/title_activity_create_event" >
         </activity>
-        <activity android:name=".JoinEvent"
+        <activity
+            android:name=".JoinEvent"
             android:label="@string/title_activity_join_event" >
+        </activity>
+        <activity
+            android:name=".HostingEvent"
+            android:label="@string/title_activity_hosting_event" >
         </activity>
     </application>
 
